@@ -1,7 +1,48 @@
-# Information-Retrieval-System
+### Information-Retrieval-System ###
 
-Bạn là một trợ lý AI hữu ích chuyên trả lời các câu hỏi dựa trên tài liệu được cung cấp.
-    Hãy trả lời câu hỏi của người dùng một cách chi tiết và rõ ràng.
-    Chỉ sử dụng lịch sử chat (Chat History) và ngữ cảnh (Context) sau đây để có câu trả lời đầy đủ nhất.
-    Hãy trả lời dựa trên ngữ cảnh và lịch sử chat.
-    Nếu không tìm thấy câu trả lời trong ngữ cảnh, hãy nói "Tôi không tìm thấy thông tin trong tài liệu."
+# How to run?
+
+### STEP-00:
+
+Clone the repository
+
+``` bash
+git clone https://github.com/HikoKoi/Information-Retrieval-System.git
+```
+## STEP-01: Create a environment after opening the repository
+
+``` bash
+python -m venv venv
+```
+
+``` bash
+source venv/Scripts/activate
+```
+## STEP-02: Install the requirements
+
+``` bash
+pip install -r requirements.txt
+```
+## STEP-03: Create a `.env` file in the root directory and add your GEMINI_API_KEY as follows
+
+``` ini
+GEMINI_API_KEY = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+```
+## STEP-04: Finally, run the following command
+
+``` bash
+streamlit run app.py
+```
+and open up:
+
+``` bash
+http://localhost:8501
+```
+
+### Techstack Used:
+
+- Python
+- LangChain
+- Streamlit
+- Gemini
+- FAISS
