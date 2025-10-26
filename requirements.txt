@@ -1,7 +1,10 @@
-python_dotenv
-google_generativeai
-langchain
-PyPDF2
-faiss-cpu
+python-dotenv
 streamlit
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-text-splitters
+langgraph
+faiss-cpu
+pypdf
 -e .
