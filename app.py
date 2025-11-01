@@ -53,9 +53,9 @@ def setup_sidebar():
 def setup_chat_interface(model_choice):
     col1, col2 = st.columns([6, 1])
     with col1:
-        st.title("💬Chat-NVP")
+        st.title("Information Retrieval System")
     with col2:
-        if st.button("🔄 Làm mới hội thoại"):
+        if st.button("🔄 Làm mới"):
             st.session_state.messages = [
                 {"role": "assistant", "content": "Xin chào! Tôi có thể giúp gì cho bạn hôm nay?"}
             ]
