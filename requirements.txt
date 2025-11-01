@@ -1,10 +1,11 @@
 python-dotenv
 streamlit
+langchain
 langchain-core
 langchain-community
 langchain-google-genai
 langchain-text-splitters
-langgraph
 faiss-cpu
-pypdf
+PyMuPDF
+docx2txt
 -e .

@@ -4,18 +4,17 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s')
 
-lift_of_files = [
-    "src/__init__.py",
-    "src/helper.py",
+list_of_files = [
+    "src/llms.py",
+    "src/data.py",
     ".env",
     "requirements.txt",
     "setup.py",
     "app.py",
-    "research/trials.ipynb",
-    "test.py",
+    "test/trials.ipynb",
 ]
 
-for filepath in lift_of_files:
+for filepath in list_of_files:
     filepath = Path(filepath)
     filedir, filename = os.path.split(filepath)
 
