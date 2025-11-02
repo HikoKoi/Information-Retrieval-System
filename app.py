@@ -78,7 +78,7 @@ def setup_chat_interface(model_choice):
 
     return msgs
 
-def handle_user_input(msgs, agent):
+def handle_user_input(msgs, agent_executor):
     """
     Xử lý khi người dùng gửi tin nhắn:
     1. Hiển thị tin nhắn người dùng
@@ -102,12 +102,13 @@ def handle_user_input(msgs, agent):
             ]
 
             # Gọi AI xử lý
-            response = agent.invoke(
+            response = agent_executor.invoke(
                 {
                     "input": prompt,
-                    "chat_history": chat_history
+                    "chat_history": chat_history,
+                    "tool_names": [tool.name for tool in agent_executor.tools]
                 },
-                callbacks= [st_callback]
+                {"callbacks": [st_callback]}
             )
 
 
@@ -116,6 +117,7 @@ def handle_user_input(msgs, agent):
             st.session_state.messages.append({"role": "assistant", "content": output})
             msgs.add_ai_message(output)
             st.write(output)
+
 
 def main():
     setup_page()

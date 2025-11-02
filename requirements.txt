@@ -1,10 +1,11 @@
 python-dotenv
 streamlit
-langchain
+langchain==0.1.4
+langchain-community==0.0.17
 langchain-core
-langchain-community
 langchain-google-genai
 langchain-text-splitters
+
 faiss-cpu
 PyMuPDF
 docx2txt

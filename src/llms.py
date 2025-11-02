@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
-# from langchain_community.retrievers import EnsembleRetriever
+from langchain.retrievers import EnsembleRetriever
 from langchain_community.retrievers import BM25Retriever
 
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.tools import tool
-from langchain.agents import create_agent
+from langchain.tools.retriever import create_retriever_tool
+from langchain.agents import AgentExecutor, create_openai_functions_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder 
 
 load_dotenv() 
@@ -31,13 +31,13 @@ def get_retriever(vector_store):
     retriever_bm25 = BM25Retriever.from_documents(top_docs)
     retriever_bm25.k = 5
 
-    # ## Kết hợp hai retriever
-    # retriever = EnsembleRetriever(
-    #     retrievers=[retriever_faiss, retriever_bm25],
-    #     weights=[0.7, 0.3]
-    # )
+    ## Kết hợp hai retriever
+    retriever = EnsembleRetriever(
+        retrievers=[retriever_faiss, retriever_bm25],
+        weights=[0.7, 0.3]
+    )
 
-    return retriever_faiss
+    return retriever
 
 
 
@@ -52,11 +52,12 @@ def get_llm_and_agent(model_choice, retriever):
         google_api_key=GOOGLE_API_KEY,
         model_kwargs={"streaming": True},
     )
-    retriever_tool = tool(
-        name_or_callable=retriever.get_relevant_documents,
-        description="Search for information of a question in the knowledge base",
-        return_direct=True  # trả trực tiếp kết quả thay vì dict
+    tool = create_retriever_tool(
+        retriever,
+        "find",
+        "Search for information of a question in the knowledge base."
     )
+    tools = [tool]
 
     # Prompt template cho agent
     system = """Bạn là một trợ lý AI hữu ích chuyên trả lời các câu hỏi dựa trên tài liệu được cung cấp.
@@ -74,12 +75,10 @@ def get_llm_and_agent(model_choice, retriever):
     ])
 
 
-    # Tạo agent
-    agent = create_agent(
-        llm=llm,
-        tools=[retriever_tool],
-        system_prompt=prompt,
-    )
 
-    return agent
+
+    # Tạo agent
+    agent = create_openai_functions_agent(llm=llm, tools=tools, prompt=prompt)
+
+    return AgentExecutor(agent=agent, tools=tools, verbose=True)
 
